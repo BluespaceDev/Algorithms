@@ -33,9 +33,31 @@ White | Gray | Black |
 ## BFS 코드
 ```c++
 // 각 정점 초기화
-
+for(int i = 0; i < graph.size(); ++i){
+    auto& u = graph[i];
+    u.color = WHITE;    // 방문 여부
+    u.d = INF;          // 시작점으로부터 거리
+    u.parent = NULL;    // 부모 스패닝 트리
+}
+// BFS 첫 준비, 시작점 s
+s.color = GRAY
+s.d = 0;
+s.parent = s;
+q.push(s);
 // BFS 시작
-
+while(!q.empty()){
+    auto u = q.front(); q.pop();
+    for(int i = 0; i < adj[u].size(); ++i){
+        auto v = adj[u][i];
+        if (v.color == WHITE){
+            v.color = GRAY;
+            v.d = u.d+1;
+            v.parent = u;
+            q.push(v);
+        }
+    }
+    u.color = BLACK;
+}
 ```
 
 ## BFS 스패닝 트리
