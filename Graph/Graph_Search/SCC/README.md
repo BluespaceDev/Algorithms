@@ -21,7 +21,18 @@ O(n+m)
 4. SCC 각 node들은 같은 leader를 가진다.  
 
 ### 코드
-
+```c++
+// scc[] 번호를 알고 있을 때 scc dag 그래프 만드는 방법
+// group 이 다르면 scc가 다르기 때문에 그때 edge를 연결함
+for (int here = 1;here <= N;here++) {
+    for (int next : adj[here]) {
+        if (scc[here] != scc[next]) {
+            // scc -> other scc
+            adj_scc[scc[here]].push_back(scc[next]); 
+        }  
+    }
+}
+```
 
 ### Lemma  
 finiching time의 내림차순으로 DFS 수행해야 SCC를 구할 수 있는 이유.  
