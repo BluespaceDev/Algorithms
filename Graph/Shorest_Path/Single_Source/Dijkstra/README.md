@@ -9,7 +9,7 @@ output : 최단 경로 dist(s,v), v는 모든 정점.
 BFS도 최단 경로 찾는 문제인데 BFS랑 차이가 무엇인가?  
 만약 모든 가중치가 1일 경우에는 가능 (최단 경로 : edge의 수 == edge의 가중치)  
   
-차이점  
+### 차이점  
 - BFS는 최단 경로인데, edge의 수가 작은 것.  
   - edge의 가중치가 아니라 갯수가 작은 것을 구함.  
 - 다익스트라는 edge의 수는 상관없이 weight가 작은 경로를 구함.  
@@ -26,8 +26,26 @@ Bogus(가짜의) Reduction 기술을 써서 음의 가중치를 없애고 다익
 2. 집합X(processed)와 집합V-X의 경계선을 지나는 edge중에 가중치가 가장 작은 edge는 safe-edge이다.  
 3. 한번 집합X에 들어가면 최단 경로로 더이상 갱신(완화)할 필요 없다.  
 
+## 정당성
+- 경계선을 지나는 edge중에 다익스트라로 찾는 edge(u,v)가 최단 거리가 아니라면..?  
+edge(u,v)는 최단 거리가 아니고 대신 다른 edge(p,q)가 최단 거리이면,  
+edge(p,q)->edge(q,h)->edge(h,v) 와 같이 다른 경로로 정점v에 도달해야된다.  
+정점q까지 최단 거리 = dist[p]+w(p,q)  
+경계선 상태에서 우선순위큐에 dist[q], dist[v]가 들어 있는 상태에서 정점u가 나왔다는 말은 dist[v] <= dist[q]라는 말이 된다.  
+edge(u,v)가 최단 거리가 아니라는 가정에 모순이 발생함.  
+<details>
+<summary>그림</summary>
+<div markdown="1">
+<img src="pictures/Dijkstra_right_1.png">
+</div>
+</details>
+
 ## 분석
 
+
 ## 시간 복잡도
-기본적인 구현으로 하면 O(V*E).  
-heap을 사용하면 O().  
+- 기본적인 구현으로 하면 O(V*E).  
+- heap을 사용하면 O(E*lgV).  
+큐 원소수 O(E), 추가삭제 O(lgE), 모든 간선 검사 O(E), 큐 중복원소 O(E)
+- 피보나치 힙, 이진 힙 사용 O(V*lgV)  
+큐에 중복원소 O(E)가 들어가는 데 제거했을 때 빠르게 동작
